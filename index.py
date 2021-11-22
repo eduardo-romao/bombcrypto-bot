@@ -1,4 +1,5 @@
 from cv2 import cv2
+import random
 import pyautogui
 import os
 import numpy as np
@@ -18,9 +19,40 @@ threshold_hero_icon = 0.3
 threshold_work = 0.7
 threshold_treasure = 0.4
 
-general_check_time = 60
-hero_work_interval = 60
-hero_refresh_interval = 30
+general_check_time_list = [
+    60,
+    61,
+    70,
+    55,
+    58,
+    74,
+    81,
+    90
+]
+hero_work_interval_list = [
+    60,
+    50,
+    46,
+    63,
+    57,
+    81,
+    72,
+    79,
+    91,
+    99,
+    61,
+    68,
+    75
+]
+hero_refresh_interval_list = [
+    60,
+    68,
+    90,
+    77,
+    99,
+    120,
+    113
+]
 
 
 
@@ -264,7 +296,8 @@ def main():
 
 
         now = time.time()
-        if now - last["heroes_work"] > hero_work_interval * 60: ## Check to see if heroes have been sent to work in the last n minutes
+
+        if now - last["heroes_work"] > random.choice(hero_work_interval_list) * 60: ## Check to see if heroes have been sent to work in the last n minutes
             heroes_work()
             last["heroes_work"] = now ## Update latest time            
             time.sleep(3)
@@ -283,13 +316,13 @@ def main():
                 last["new_map"] = now
         
         now = time.time()
-        if now - last["refresh_heroes"] > hero_refresh_interval * 60:
+        if now - last["refresh_heroes"] > random.choice(hero_refresh_interval_list) * 60:
             refresh_heroes()
             last["refresh_heroes"] = now
             time.sleep(3)
 
         sys.stdout.flush()
-        time.sleep(general_check_time)
+        time.sleep(random.choice(general_check_time_list))
 
 
 main()
